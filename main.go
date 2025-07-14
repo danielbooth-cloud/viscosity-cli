@@ -40,6 +40,8 @@ func main() {
 		}
 	case "status", "list":
 		getVPNStatus()
+	case "quit":
+		quitViscosity()
 	case "help", "-h", "--help":
 		printUsage()
 	default:
@@ -59,6 +61,7 @@ func printUsage() {
 	fmt.Println("  viscosity-cli off [connection-name]        Alias for disconnect")
 	fmt.Println("  viscosity-cli status                       Show status of all VPN connections")
 	fmt.Println("  viscosity-cli list                         Alias for status")
+	fmt.Println("  viscosity-cli quit                         Quit Viscosity application")
 	fmt.Println("  viscosity-cli help                         Show this help message")
 	fmt.Println("")
 	fmt.Println("Examples:")
@@ -68,6 +71,7 @@ func printUsage() {
 	fmt.Println("  viscosity-cli disconnect MyVPN             Disconnect from specific VPN")
 	fmt.Println("  viscosity-cli off                          Disconnect from all VPNs")
 	fmt.Println("  viscosity-cli status                       Show all connections status")
+	fmt.Println("  viscosity-cli quit                         Quit Viscosity application")
 }
 
 func connectVPN(connectionName string) {
@@ -231,4 +235,19 @@ func runAppleScriptWithOutput(script string) (string, error) {
 		return "", err
 	}
 	return string(output), nil
+}
+
+func quitViscosity() {
+	script := `
+		tell application "Viscosity"
+			quit
+		end tell
+	`
+
+	err := runAppleScript(script)
+	if err != nil {
+		fmt.Printf("Error quitting Viscosity: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Println("Viscosity application quit successfully")
 }
