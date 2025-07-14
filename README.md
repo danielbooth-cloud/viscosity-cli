@@ -18,24 +18,32 @@ A command-line interface for controlling Viscosity VPN connections on macOS.
 
 ## Installation
 
-### Option 1: Build from source
+### Option 1: Install with Go (Recommended)
+
+```bash
+go install github.com/yourusername/viscosity-cli@latest
+```
+
+### Option 2: Build from source
 
 1. Clone or download this repository
 2. Navigate to the project directory
 3. Build the binary:
    ```bash
-   go build -o vpn main.go
+   go build -o viscosity-cli main.go
    ```
 4. (Optional) Move the binary to your PATH:
    ```bash
-   sudo mv vpn /usr/local/bin/
+   sudo mv viscosity-cli /usr/local/bin/
    ```
 
-### Option 2: Use the pre-built binary
+#### Alias
+I recommend setting an alias in your bash or zsh profile.
 
-If you have the `vpn` binary, you can move it directly to your PATH:
+**For Zsh (default on macOS Catalina+):**
 ```bash
-sudo mv vpn /usr/local/bin/
+echo 'alias vpn="viscosity-cli"' >> ~/.zshrc
+source ~/.zshrc
 ```
 
 ## Usage
@@ -43,30 +51,30 @@ sudo mv vpn /usr/local/bin/
 ### Connect to a VPN
 ```bash
 # Interactive mode - shows a menu to select from available connections
-vpn connect
-vpn on
+viscosity-cli connect
+viscosity-cli on
 
 # Direct connection to a specific VPN
-vpn connect MyVPN
-vpn on MyVPN
+viscosity-cli connect MyVPN
+viscosity-cli on MyVPN
 ```
 
 ### Disconnect from a VPN
 ```bash
 # Disconnect from a specific connection
-vpn disconnect MyVPN
-vpn off MyVPN
+viscosity-cli disconnect MyVPN
+viscosity-cli off MyVPN
 
 # Disconnect from all connections
-vpn disconnect
-vpn off
+viscosity-cli disconnect
+viscosity-cli off
 ```
 
 ### Check VPN status
 ```bash
-vpn status
+viscosity-cli status
 # or
-vpn list
+viscosity-cli list
 ```
 
 This will show all your VPN connections with status indicators:
@@ -76,28 +84,28 @@ This will show all your VPN connections with status indicators:
 
 ### Get help
 ```bash
-vpn help
-vpn -h
-vpn --help
+viscosity-cli help
+viscosity-cli -h
+viscosity-cli --help
 ```
 
 ## Examples
 
 ```bash
 # Start interactive connection selection
-vpn connect
+viscosity-cli connect
 
 # Connect to a VPN named "Work VPN" directly
-vpn connect "Work VPN"
+viscosity-cli connect "Work VPN"
 
 # Check status of all connections
-vpn status
+viscosity-cli status
 
 # Disconnect from "Work VPN"
-vpn disconnect "Work VPN"
+viscosity-cli disconnect "Work VPN"
 
 # Disconnect from all VPNs
-vpn off
+viscosity-cli off
 ```
 
 ## Notes
@@ -113,10 +121,3 @@ vpn off
 If you get permission errors, you may need to:
 1. Open System Preferences → Security & Privacy → Privacy → Automation
 2. Allow your terminal application to control Viscosity
-
-### Connection Not Found
-Make sure the connection name exactly matches what's shown in Viscosity, including capitalization and spaces.
-
-## License
-
-MIT License
